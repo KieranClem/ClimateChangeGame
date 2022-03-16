@@ -12,7 +12,7 @@ public class PlayerMovement : MonoBehaviour
 
     //other gameplay elements
     private bool nextToSaveNPC;
-    private GameObject NPCToSave;
+    private SaveNPC NPCToSave;
 
     //UI Elements
     public Text hydrationLevel;
@@ -35,6 +35,16 @@ public class PlayerMovement : MonoBehaviour
     {
         //Get player's inputs
         Movement.x = Input.GetAxisRaw("Horizontal");
+
+        if(nextToSaveNPC == true)
+        {
+            if(Input.GetKeyDown(KeyCode.E) && numOfWater >= 1 && (NPCToSave.saveFromHeat && !NPCToSave.saveFromFlood))
+            {
+                numOfWater -= 1;
+                NPCToSave.GiveWater();
+                Debug.Log("things");
+            }
+        }
     }
 
     private void FixedUpdate()
@@ -55,7 +65,8 @@ public class PlayerMovement : MonoBehaviour
         if(other.tag == "NPCToSave")
         {
             nextToSaveNPC = true;
-            NPCToSave = other.gameObject;
+            NPCToSave = other.GetComponent<SaveNPC>();
+            NPCToSave.InteractionWithPlayer();
         }
     }
 

@@ -38,4 +38,16 @@ public class NPCSpeak : MonoBehaviour
         diolagueBox.gameObject.SetActive(false);
 
     }
+
+    public void Speak(bool Saved)
+    {
+        if(Saved)
+        {
+            StartCoroutine(DisplayText(spokenDio[1]));
+        }
+        else
+        {
+            StartCoroutine(DisplayText(spokenDio[0]));
+        }
+    }
 }
