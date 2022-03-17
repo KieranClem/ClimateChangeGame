@@ -23,6 +23,7 @@ public class PlayerMovement : MonoBehaviour
     [HideInInspector] public int LevelOfWater = 5;
     public int numIncreaseForColWater;
     public int numOfWater;
+    [HideInInspector]public bool inHeatZone = false;
 
     // Start is called before the first frame update
     void Start()
@@ -40,9 +41,13 @@ public class PlayerMovement : MonoBehaviour
         {
             if(Input.GetKeyDown(KeyCode.E) && numOfWater >= 1 && (NPCToSave.saveFromHeat && !NPCToSave.saveFromFlood))
             {
-                numOfWater -= 1;
-                NPCToSave.GiveWater();
-                Debug.Log("things");
+                if (!NPCToSave.isSaved)
+                {
+                    numOfWater -= 1;
+                    NPCToSave.GiveWater();
+                    NPCToSave.isSaved = true;
+                    Debug.Log("things");
+                }
             }
         }
     }
@@ -92,13 +97,43 @@ public class PlayerMovement : MonoBehaviour
 
     public void UseWater()
     {
-        numOfWater -= 1;
+        
         if (!nextToSaveNPC)
         {
+            numOfWater -= 1;
             LevelOfWater += numIncreaseForColWater;
             UpdateHydration();
         }
+        else if(nextToSaveNPC)
+        {
+            if (!NPCToSave.isSaved)
+            {
+                numOfWater -= 1;
+                NPCToSave.GiveWater();
+                NPCToSave.isSaved = true;
+            }
+        }
 
         UpdateWater();
+    }
+
+    public IEnumerator DehydrationDamage()
+    {
+        Debug.Log("We here");
+
+        while (inHeatZone)
+        {
+
+            yield return new WaitForSeconds(3f);
+            
+            //here to catch if player has left dehyration zone already and prevent them from taking damage
+            if (inHeatZone)
+            {
+                LevelOfWater -= 1;
+                UpdateHydration();
+                Debug.Log("We here2");
+            }
+
+        }
     }
 }
