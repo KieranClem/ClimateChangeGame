@@ -119,7 +119,6 @@ public class PlayerMovement : MonoBehaviour
 
     public IEnumerator DehydrationDamage()
     {
-        Debug.Log("We here");
 
         while (inHeatZone)
         {
