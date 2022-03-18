@@ -6,6 +6,7 @@ TagManager:
   tags:
   - BottleOfWater
   - NPCToSave
+  - Floor
   layers:
   - Default
   - TransparentFX

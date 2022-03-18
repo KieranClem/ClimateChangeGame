@@ -9,10 +9,15 @@ public class PlayerMovement : MonoBehaviour
     Vector3 Movement;
     public Rigidbody rb;
     public float MovementSpeed = 10f;
+    public float JumpForce = 5f;
+    Vector3 Jump = new Vector3(0f, 2f, 0f);
+    private bool isGrounded = true;
 
     //other gameplay elements
     private bool nextToSaveNPC;
     private SaveNPC NPCToSave;
+    private int NPCsInLevel;
+    private int NPCsSaved = 0;
 
     //UI Elements
     public Text hydrationLevel;
@@ -29,6 +34,7 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         hydrationLevel.text = "Hydration: " + LevelOfWater.ToString();
+        NPCsInLevel = GameObject.FindGameObjectsWithTag("NPCToSave").Length;
     }
 
     // Update is called once per frame
@@ -49,6 +55,12 @@ public class PlayerMovement : MonoBehaviour
                     Debug.Log("things");
                 }
             }
+        }
+
+        if(Input.GetKeyDown(KeyCode.W) && isGrounded)
+        {
+            rb.AddForce(Jump * JumpForce, ForceMode.Impulse);
+            isGrounded = false;
         }
     }
 
@@ -72,6 +84,11 @@ public class PlayerMovement : MonoBehaviour
             nextToSaveNPC = true;
             NPCToSave = other.GetComponent<SaveNPC>();
             NPCToSave.InteractionWithPlayer();
+        }
+
+        if(other.tag == "Floor")
+        {
+            isGrounded = true;
         }
     }
 
@@ -111,6 +128,11 @@ public class PlayerMovement : MonoBehaviour
                 numOfWater -= 1;
                 NPCToSave.GiveWater();
                 NPCToSave.isSaved = true;
+                NPCsSaved += 1;
+                if(NPCsSaved >= NPCsInLevel)
+                {
+                    //FinishLevel
+                }
             }
         }
 
