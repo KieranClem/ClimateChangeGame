@@ -30,11 +30,16 @@ public class PlayerMovement : MonoBehaviour
     public int numOfWater;
     [HideInInspector]public bool inHeatZone = false;
 
+    //checkpoint
+    Transform checkpointPosition;
+
+
     // Start is called before the first frame update
     void Start()
     {
         hydrationLevel.text = "Hydration: " + LevelOfWater.ToString();
         NPCsInLevel = GameObject.FindGameObjectsWithTag("NPCToSave").Length;
+        Debug.Log(NPCsInLevel);
     }
 
     // Update is called once per frame
@@ -49,9 +54,10 @@ public class PlayerMovement : MonoBehaviour
             {
                 if (!NPCToSave.isSaved)
                 {
-                    numOfWater -= 1;
-                    NPCToSave.GiveWater();
-                    NPCToSave.isSaved = true;
+                    //numOfWater -= 1;
+                    //NPCToSave.GiveWater();
+                    //NPCToSave.isSaved = true;
+                    UseWater();
                     Debug.Log("things");
                 }
             }
@@ -89,6 +95,20 @@ public class PlayerMovement : MonoBehaviour
         if(other.tag == "Floor")
         {
             isGrounded = true;
+        }
+
+        if(other.tag == "Checkpoint")
+        {
+            checkpointPosition = other.transform;
+        }
+
+        if(other.tag == "Water")
+        {
+            this.transform.position = checkpointPosition.position;
+            if(numOfWater < 5)
+            {
+                numOfWater = 5;
+            }
         }
     }
 
@@ -129,9 +149,11 @@ public class PlayerMovement : MonoBehaviour
                 NPCToSave.GiveWater();
                 NPCToSave.isSaved = true;
                 NPCsSaved += 1;
+                Debug.Log(NPCsSaved);
                 if(NPCsSaved >= NPCsInLevel)
                 {
                     //FinishLevel
+                    GetComponentInChildren<SceneLoads>().LoadMainMenu();
                 }
             }
         }
