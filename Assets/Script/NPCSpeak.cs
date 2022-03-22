@@ -39,6 +39,11 @@ public class NPCSpeak : MonoBehaviour
 
     }
 
+    public void HideText()
+    {
+        diolagueBox.gameObject.SetActive(false);
+    }
+
     public void Speak(bool Saved)
     {
         if(Saved)

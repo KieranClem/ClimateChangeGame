@@ -85,11 +85,17 @@ public class PlayerMovement : MonoBehaviour
             Destroy(other.gameObject);
         }
 
-        if(other.tag == "NPCToSave")
+        if (other.tag == "NPCToSave")
         {
             nextToSaveNPC = true;
             NPCToSave = other.GetComponent<SaveNPC>();
             NPCToSave.InteractionWithPlayer();
+            if (NPCToSave.saveFromFlood && !NPCToSave.isSaved)
+            {
+                NPCsSaved += 1;
+                NPCToSave.isSaved = true;
+                CheckIfGameIsFinished();
+            }
         }
 
         if(other.tag == "Floor")
@@ -150,11 +156,8 @@ public class PlayerMovement : MonoBehaviour
                 NPCToSave.isSaved = true;
                 NPCsSaved += 1;
                 Debug.Log(NPCsSaved);
-                if(NPCsSaved >= NPCsInLevel)
-                {
-                    //FinishLevel
-                    GetComponentInChildren<SceneLoads>().LoadMainMenu();
-                }
+                CheckIfGameIsFinished();
+                
             }
         }
 
@@ -177,6 +180,16 @@ public class PlayerMovement : MonoBehaviour
                 Debug.Log("We here2");
             }
 
+        }
+    }
+
+    void CheckIfGameIsFinished()
+    {
+        if (NPCsSaved >= NPCsInLevel)
+        {
+            //FinishLevel
+            GetComponentInChildren<SceneLoads>().LoadMainMenu();
+            Debug.Log(NPCsSaved);
         }
     }
 }

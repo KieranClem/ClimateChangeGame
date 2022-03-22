@@ -27,11 +27,12 @@ public class SaveNPC : MonoBehaviour
         {
             isSaved = true;
             displayText();
+            StartCoroutine(DestroySelf());
 
         }
         else if(saveFromHeat)
         {
-            displayText();
+            displayText();   
         }
     }
 
@@ -39,10 +40,18 @@ public class SaveNPC : MonoBehaviour
     {
         isSaved = true;
         displayText();
+        StartCoroutine(DestroySelf());
     }
 
     void displayText()
     {
         words.Speak(isSaved);
+    }
+
+    IEnumerator DestroySelf()
+    {
+        yield return new WaitForSeconds(3f);
+        words.HideText();
+        Destroy(this.gameObject);
     }
 }

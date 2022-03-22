@@ -108,7 +108,7 @@ GameObject:
   - component: {fileID: 3143695673856166423}
   m_Layer: 0
   m_Name: LargePlatform
-  m_TagString: Untagged
+  m_TagString: Floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -122,7 +122,7 @@ Transform:
   m_GameObject: {fileID: 3143695673856166420}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 48.692, y: 0.13, z: 0.78}
-  m_LocalScale: {x: 7.604244, y: 2.3383, z: 3.401}
+  m_LocalScale: {x: 6.2913957, y: 3.305523, z: 5.6418138}
   m_Children:
   - {fileID: 3143695673189129276}
   - {fileID: 3143695673090970174}
@@ -207,7 +207,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!114 &3143695673856166423
 MonoBehaviour:
