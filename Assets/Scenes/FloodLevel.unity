@@ -780,6 +780,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: NPCSave (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 6196311863275469623, guid: c847ab57e22cfe34d8ae8ac8494cf941, type: 3}
+      propertyPath: diolagueBox
+      value: 
+      objectReference: {fileID: 1353060309}
     - target: {fileID: 6196311863275469627, guid: c847ab57e22cfe34d8ae8ac8494cf941, type: 3}
       propertyPath: m_LocalPosition.x
       value: 65.4723

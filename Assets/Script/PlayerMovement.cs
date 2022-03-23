@@ -68,6 +68,11 @@ public class PlayerMovement : MonoBehaviour
             rb.AddForce(Jump * JumpForce, ForceMode.Impulse);
             isGrounded = false;
         }
+
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            GetComponentInChildren<SceneLoads>().LoadMainMenu();
+        }
     }
 
     private void FixedUpdate()
@@ -140,16 +145,20 @@ public class PlayerMovement : MonoBehaviour
 
     public void UseWater()
     {
-        
+        Debug.Log("we here");
         if (!nextToSaveNPC)
         {
-            numOfWater -= 1;
-            LevelOfWater += numIncreaseForColWater;
-            UpdateHydration();
+            if (numOfWater > 0)
+            {
+                numOfWater -= 1;
+                LevelOfWater += numIncreaseForColWater;
+                UpdateHydration();
+            }
         }
         else if(nextToSaveNPC)
         {
-            if (!NPCToSave.isSaved)
+            
+            if (!NPCToSave.isSaved && numOfWater > 0)
             {
                 numOfWater -= 1;
                 NPCToSave.GiveWater();
@@ -178,6 +187,10 @@ public class PlayerMovement : MonoBehaviour
                 LevelOfWater -= 1;
                 UpdateHydration();
                 Debug.Log("We here2");
+                if(LevelOfWater == 0)
+                {
+                    this.transform.position = checkpointPosition.position;
+                }
             }
 
         }
@@ -185,6 +198,7 @@ public class PlayerMovement : MonoBehaviour
 
     void CheckIfGameIsFinished()
     {
+        Debug.Log(NPCsSaved);
         if (NPCsSaved >= NPCsInLevel)
         {
             //FinishLevel

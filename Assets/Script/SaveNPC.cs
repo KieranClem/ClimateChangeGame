@@ -15,17 +15,10 @@ public class SaveNPC : MonoBehaviour
         words = this.GetComponent<NPCSpeak>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void InteractionWithPlayer()
     {
         if(saveFromFlood)
         {
-            isSaved = true;
             displayText();
             StartCoroutine(DestroySelf());
 

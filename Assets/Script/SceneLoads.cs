@@ -7,7 +7,7 @@ public class SceneLoads : MonoBehaviour
 {
     public void LoadWater()
     {
-        SceneManager.LoadScene("WaterLevel");
+        SceneManager.LoadScene("FloodLevel");
     }
 
     public void LoadHeat()
@@ -18,5 +18,10 @@ public class SceneLoads : MonoBehaviour
     public void LoadMainMenu()
     {
         SceneManager.LoadScene("MainMenu");
+    }
+
+    public void CloseGame()
+    {
+        Application.Quit();
     }
 }

@@ -11,9 +11,12 @@ public class DehydrationZone : MonoBehaviour
         if(other.tag == "Player")
         {
             player = other.GetComponent<PlayerMovement>();
-            player.inHeatZone = true;
-            StartCoroutine(player.DehydrationDamage());
-            
+            if(!player.inHeatZone)
+            {
+                player.inHeatZone = true;
+                StartCoroutine(player.DehydrationDamage());
+                Debug.Log("it hot");
+            }
         }
     }
 
@@ -21,8 +24,11 @@ public class DehydrationZone : MonoBehaviour
     {
         if (other.tag == "Player")
         {
-            player.inHeatZone = false;
-            player = null;
+            if (player != null)
+            {
+                player.inHeatZone = false;
+                player = null;
+            }
         }
     }
 }
